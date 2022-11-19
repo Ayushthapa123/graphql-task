@@ -1,6 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import axios from "axios";
-import { useQuery } from "react-query";
+import React, { useState } from 'react';
 
 import styles from './sass/displayusers.module.scss';
 
@@ -8,18 +6,15 @@ import { GoPlus } from 'react-icons/go'
 
 import Titles from './Titles';
 import User from './User';
-
 import useFetchUsers from '../hooks/useFetchUsers';
 
 
 export default function DisplayUsers() {
+
   const [filter, setFilter] = useState("");
-  // const [users, setUsers] = useState([]);
 
-  const { users, setUsers, isLoading, error } = useFetchUsers()
-
-  if (isLoading) return <h2>Loading...</h2>;
-  if (error) return <pre>Oops...Error occured</pre>;
+  const endpoint = "https://graphqlzero.almansi.me/api";
+  const { users, setUsers, isLoading, error } = useFetchUsers(endpoint)
 
 
   function handleSelect(e: any): void {
@@ -37,6 +32,11 @@ export default function DisplayUsers() {
       setUsers(tempUser);
     }
   };
+
+
+
+  if (isLoading) return <h2>Loading...</h2>;
+  if (error) return <pre>Oops...Error occured</pre>;
 
   return (
     <div className={styles.displayusers}>
@@ -57,6 +57,7 @@ export default function DisplayUsers() {
                   || user.username.toLowerCase().includes(filter.toLowerCase())
                   || user.phone.toLowerCase().includes(filter.toLowerCase())
                   || user.website.toLowerCase().includes(filter.toLowerCase())
+                  || user.address.street.toLowerCase().includes(filter.toLowerCase())
                   || user.email.toLowerCase().includes(filter.toLowerCase())) {
 
                   return user
