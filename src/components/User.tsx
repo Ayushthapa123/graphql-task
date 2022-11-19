@@ -2,6 +2,7 @@ import React from 'react'
 import styles from './sass/user.module.scss'
 
 export default function User(props: any) {
+
     return (
         <div className={styles.user}>
             <div><input type='checkbox' className='usercheckbox' name={props.user.name} checked={props.user.isChecked || false}

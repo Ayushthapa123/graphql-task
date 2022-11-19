@@ -9,74 +9,34 @@ import { GoPlus } from 'react-icons/go'
 import Titles from './Titles';
 import User from './User';
 
-
-const endpoint: string = "https://graphqlzero.almansi.me/api";
-const USERS_QUERY = `
-  {
-   users {
-    data {
-        id
-        name
-        username
-        email
-        address {
-            street
-        }
-        phone
-        website
-    }
-   }
-  }
-`;
+import useFetchUsers from '../hooks/useFetchUsers';
 
 
 export default function DisplayUsers() {
-
-
   const [filter, setFilter] = useState("");
-  const [users, setUsers] = useState([]);
+  // const [users, setUsers] = useState([]);
 
-  const { data, isLoading, error } = useQuery("users", async () => {
-    const response = await axios({
-      url: endpoint,
-      method: "POST",
-      data: {
-        query: USERS_QUERY
-      }
-    });
-
-    setUsers(response.data.data.users.data)
-    // return response.data.data;
-  });
+  const { users, setUsers, isLoading, error } = useFetchUsers()
 
   if (isLoading) return <h2>Loading...</h2>;
   if (error) return <pre>Oops...Error occured</pre>;
 
 
   function handleSelect(e: any): void {
-    console.log(e.target)
-
     const { name, checked } = e.target;
 
     if (name === "selectall") {
-
-      let tempUser: any = users.map((user: any) => {
+      let tempUser: Array<object> = users.map((user: any) => {
         return { ...user, isChecked: checked };
       });
-
       setUsers(tempUser);
-    }
-
-    else {
-
-      let tempUser: any = users.map((user: any) =>
+    } else {
+      let tempUser: Array<object> = users.map((user: any) =>
         user.name === name ? { ...user, isChecked: checked } : user
       );
       setUsers(tempUser);
     }
   };
-
-
 
   return (
     <div className={styles.displayusers}>
@@ -113,8 +73,6 @@ export default function DisplayUsers() {
               ))}
           </div>
         }
-
-
 
       </div>
     </div>

@@ -2,9 +2,6 @@ import React, { useEffect, useState } from 'react'
 import styles from './sass/titles.module.scss'
 
 export default function Titles(props: any) {
-    const [checked, setChecked] = useState(false);
-
-
 
     return (
         <div className={styles.titles}>

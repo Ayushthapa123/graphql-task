@@ -25,7 +25,7 @@ const USERS_QUERY = `
 
 export default function useFetchUsers() {
 
-  const [usersdata, setUsersdata] = useState();
+  const [users, setUsers] = useState([]);
 
   const { data, isLoading, error } = useQuery("launches", async () => {
     const response = await axios({
@@ -35,12 +35,13 @@ export default function useFetchUsers() {
         query: USERS_QUERY
       }
     });
+    setUsers(response.data.data.users.data);
     return response.data.data;
   });
-  setUsersdata(data);
-  if (isLoading) return <h2>Loading...</h2>;
-  if (error) return <pre>Error occured</pre>;
 
-  return [usersdata];
+  // if (isLoading) return <h2>Loading...</h2>;
+  // if (error) return <pre>Error occured</pre>;
+
+  return { users, setUsers, isLoading, error, data };
 
 }
