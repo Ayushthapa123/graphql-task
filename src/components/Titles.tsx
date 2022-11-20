@@ -6,7 +6,7 @@ export default function Titles(props: any) {
     return (
         <div className={styles.titles}>
             <div><input type='checkbox' name="selectall" onChange={(e) => props.handleSelect(e)}
-                checked={!props.users.some((user: any) => user?.isChecked !== true)}
+                checked={!props.users.some((user: any) => user.isChecked !== true)}
             /></div>
             <div><span>Name</span></div>
             <div><span>Username</span></div>
