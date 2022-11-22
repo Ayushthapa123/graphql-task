@@ -22,7 +22,6 @@ export default function DisplayUsers() {
 
     if (name === "selectall") {
       let tempUser: Array<object> = users.map((user: any) => {
-        console.log(user)
         return { ...user, isChecked: checked };
       });
       setUsers(tempUser);

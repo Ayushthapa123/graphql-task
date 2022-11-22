@@ -27,7 +27,7 @@ export default function useFetchUsers(url: string) {
 
   const [users, setUsers] = useState([]);
 
-  const { data, isLoading, error } = useQuery("launches", async () => {
+  const { isLoading, error } = useQuery("users", async () => {
     const response = await axios({
       url: url,
       method: "POST",
@@ -39,6 +39,6 @@ export default function useFetchUsers(url: string) {
     return response.data.data;
   });
 
-  return { users, setUsers, isLoading, error, data };
+  return { users, setUsers, isLoading, error };
 
 }
